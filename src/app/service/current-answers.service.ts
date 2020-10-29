@@ -29,7 +29,7 @@ export class CurrentAnswersService {
       .valueChanges();
   }
 
-  public async setCorrectAnswer(question: Question,answer: Answer, player: Player): Promise<void> {
+  public async setCorrectAnswer(question: Question, answer: Answer, player: Player): Promise<void> {
     const givenAnswer: GivenAnswer = { question, answer, player };
 
     this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
