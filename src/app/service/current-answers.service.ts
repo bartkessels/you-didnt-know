@@ -5,21 +5,23 @@ import { filter, map } from 'rxjs/operators';
 import { Answer } from '../models/answer.model';
 import { GivenAnswer } from '../models/given-answer.model';
 import { Player } from '../models/player.model';
+import { Question } from '../models/question.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrentAnswersService {
   private readonly firestoreCollectionName = 'answers';
-  private readonly fireststoreCorrectAnswerDocName = 'correct-answer';
+  private readonly firestoreCorrectAnswerDocName = 'correct-answer';
 
   constructor(private firestore: AngularFirestore) { }
 
-  public async sendAnswer(answer: Answer, player: Player): Promise<void> {
-    const givenAnswer: GivenAnswer = { answer, player };
+  public async sendAnswer(question: Question, answer: Answer, player: Player): Promise<void> {
+    const givenAnswer: GivenAnswer = { question, answer, player };
 
     await this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
-      .add(givenAnswer);
+      .doc(player.id)
+      .set(givenAnswer);
   }
 
   public getAllAnswers(): Observable<GivenAnswer[]> {
@@ -27,21 +29,21 @@ export class CurrentAnswersService {
       .valueChanges();
   }
 
-  public async setCorrectAnswer(answer: Answer, player: Player): Promise<void> {
-    const givenAnswer: GivenAnswer = { answer, player };
+  public async setCorrectAnswer(question: Question,answer: Answer, player: Player): Promise<void> {
+    const givenAnswer: GivenAnswer = { question, answer, player };
 
     this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
-      .doc<GivenAnswer>(this.fireststoreCorrectAnswerDocName)
+      .doc<GivenAnswer>(this.firestoreCorrectAnswerDocName)
       .set(givenAnswer);
   }
 
   public getCorrectAnswer(): Observable<GivenAnswer> {
     return this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
-      .doc<GivenAnswer>(this.fireststoreCorrectAnswerDocName)
+      .doc<GivenAnswer>(this.firestoreCorrectAnswerDocName)
       .valueChanges();
   }
 
-  public async deleteCurrentAnswers(): Promise<void> {
+  public deleteCurrentAnswers(): void {
     this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
       .snapshotChanges()
       .subscribe(actions => {

@@ -8,6 +8,7 @@ import { PlayQuizComponent } from './presentation/host/page/play-quiz/play-quiz.
 import { SettingsComponent } from './presentation/host/page/settings/settings.component';
 import { UpdateQuizComponent } from './presentation/host/page/update-quiz/update-quiz.component';
 import { JoinComponent } from './presentation/player/page/join/join.component';
+import { ParticipateComponent } from './presentation/player/page/participate/participate.component';
 import { RegisterPlayerComponent } from './presentation/player/page/register-player/register-player.component';
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   // Player routes
   { path: 'player/join/:firebaseProjectId/:firebaseApiKey', component: JoinComponent },
   { path: 'player/register', component: RegisterPlayerComponent },
+  { path: 'player/participate', component: ParticipateComponent }
 ];
 
 @NgModule({

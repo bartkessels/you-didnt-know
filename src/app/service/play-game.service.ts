@@ -34,11 +34,13 @@ export class PlayGameService {
     this.assignments = quiz.assignments;
 
     this.currentAnswersService.getAllAnswers().subscribe(answers => {
-      if (answers.length >= this.players.length) {
-        const correctAnswer = answers.filter(a => a.player.id === this.aboutPlayer.id)[0];
+      const questionAnswers = answers.filter(q => q.question.id === this.questions[0].id);
 
-        const correctAnswers = answers.filter(a => a.player.id !== this.aboutPlayer.id && a.answer.id === correctAnswer.answer.id);
-        const wrongAnswers = answers.filter(a => a.player.id !== this.aboutPlayer.id && a.answer.id !== correctAnswer.answer.id);
+      if (this.players != null && questionAnswers.length >= this.players.length) {
+        const correctAnswer = questionAnswers.filter(a => a.player.id === this.aboutPlayer.id)[0];
+
+        const correctAnswers = questionAnswers.filter(a => a.player.id !== this.aboutPlayer.id && a.answer.id === correctAnswer.answer.id);
+        const wrongAnswers = questionAnswers.filter(a => a.player.id !== this.aboutPlayer.id && a.answer.id !== correctAnswer.answer.id);
 
         const results: Results = {
           question: this.questions[0],
@@ -53,12 +55,16 @@ export class PlayGameService {
     this.playerService.getAllPlayers().subscribe(players => {
       this.players = players;
 
-      this.goToNextItem();
+      if (players.length > 0) {
+        this.goToNextItem();
+      }
     });
   }
 
   public async resultsViewed(): Promise<void> {
     await this.currentResultsService.deleteCurrentResults();
+    await this.currentQuestionService.deleteCurrentQuestion();
+
     await this.goToNextItem();
   }
 
@@ -75,9 +81,9 @@ export class PlayGameService {
   }
 
   private async goToNextItem(): Promise<void> {
-    if (this.questions.length % 3 === 0 && this.assignments.length > 0) {
+    if (this.questions.length % 3 === 0 && this.assignments.length > 1) {
       this.goToNextAssignment();
-    } else if (this.questions.length > 0) {
+    } else if (this.questions.length > 1) {
       this.goToNextQuestion();
     } else {
       this.endQuiz();
@@ -87,26 +93,26 @@ export class PlayGameService {
   public async endQuiz(): Promise<void> {
     this.currentQuestionService.deleteCurrentQuestion();
     this.currentAssignmentService.deleteCurrentAssignment();
-    this.currentAnswersService.deleteCurrentAnswers();
     this.currentResultsService.deleteCurrentResults();
+    this.currentAnswersService.deleteCurrentAnswers();
     this.aboutPlayerService.deleteAboutPlayer();
   }
 
   private async goToNextQuestion(): Promise<void> {
+    this.questions.splice(0, 1);
+
     await this.currentQuestionService.setCurrentQuestion(this.questions[0]);
     await this.setAboutPlayer();
-    this.questions.splice(0, 1);
   }
 
   private async goToNextAssignment(): Promise<void> {
-    this.currentAssignmentService.setCurrentAssignment(this.assignments[0]);
     this.assignments.splice(0, 1);
+
+    this.currentAssignmentService.setCurrentAssignment(this.assignments[0]);
   }
 
   private async goToResults(results: Results): Promise<void> {
-    this.currentQuestionService.deleteCurrentQuestion();
-    this.currentAnswersService.deleteCurrentAnswers();
-    this.aboutPlayerService.deleteAboutPlayer();
+    await this.currentQuestionService.deleteCurrentQuestion();
 
     await this.currentResultsService.setCurrentResults(results);
   }

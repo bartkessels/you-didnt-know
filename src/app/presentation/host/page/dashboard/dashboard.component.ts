@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Quiz } from 'src/app/models/quiz.model';
 import { QuizService } from 'src/app/service/quiz.service';
@@ -8,18 +8,10 @@ import { QuizService } from 'src/app/service/quiz.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   public quizzes: Observable<Quiz[]>;
 
   constructor(private quizService: QuizService) {
     this.quizzes = this.quizService.getAllQuizzes();
-
-    this.quizService.getAllQuizzes().subscribe(q => {
-      console.log(q);
-    });
-  }
-
-  ngOnInit(): void {
-    // this.quizzes = this.quizService.getAllQuizzes();
   }
 }

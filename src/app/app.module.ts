@@ -38,6 +38,11 @@ import { DisplayAssignmentComponent } from './presentation/host/component/displa
 import { PlayQuizComponent } from './presentation/host/page/play-quiz/play-quiz.component';
 import { HostPlayingQuizToolbarComponent } from './presentation/shared/host-playing-quiz-toolbar/host-playing-quiz-toolbar.component';
 import { QuizOutroComponent } from './presentation/host/component/quiz-outro/quiz-outro.component';
+import { AnswerQuestionComponent } from './presentation/player/component/answer-question/answer-question.component';
+import { ExecuteAssignmentComponent } from './presentation/player/component/execute-assignment/execute-assignment.component';
+import { WaitingComponent } from './presentation/player/component/waiting/waiting.component';
+import { ParticipateComponent } from './presentation/player/page/participate/participate.component';
+import { DisplayUserResultsComponent } from './presentation/player/component/display-user-results/display-user-results.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +66,12 @@ import { QuizOutroComponent } from './presentation/host/component/quiz-outro/qui
     DisplayAssignmentComponent,
     PlayQuizComponent,
     HostPlayingQuizToolbarComponent,
-    QuizOutroComponent
+    QuizOutroComponent,
+    AnswerQuestionComponent,
+    ExecuteAssignmentComponent,
+    WaitingComponent,
+    ParticipateComponent,
+    DisplayUserResultsComponent
   ],
   imports: [
     BrowserModule,

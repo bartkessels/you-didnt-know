@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="icon">
+      <mat-icon class="scale-icon">emoji_people</mat-icon>
+    </div>
+    <mat-card-title *ngIf="question">{{ question.question }}</mat-card-title>
+    <mat-card-subtitle *ngIf="aboutPlayer && currentPlayer && aboutPlayer.id === currentPlayer.id">Hey {{ aboutPlayer.name }}, you can set the correct answer</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile *ngFor="let answer of question.answers; index as i">
+        <button *ngIf="i % 3 === 0" (click)="answerSelected.emit(answer)" mat-raised-button color="accent">{{ answer.answer }}</button>
+        <button *ngIf="i % 3 !== 0" (click)="answerSelected.emit(answer)" mat-raised-button color="primary">{{ answer.answer }}</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+

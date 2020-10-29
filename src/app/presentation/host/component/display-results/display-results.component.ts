@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Player } from 'src/app/models/player.model';
 import { Results } from 'src/app/models/results.model';
 
 @Component({
@@ -8,5 +9,6 @@ import { Results } from 'src/app/models/results.model';
 })
 export class DisplayResultsComponent {
   @Input() results: Results;
+  @Input() aboutPlayer: Player;
   @Output() resultsViewed = new EventEmitter();
 }

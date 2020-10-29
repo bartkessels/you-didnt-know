@@ -42,7 +42,7 @@ describe('CurrentAnswersService', () => {
     const player: Player = { id: '', name: '' };
 
     // Act
-    service.sendAnswer(answer, player);
+    // service.sendAnswer(answer, player);
 
     // Assert
     expect(angularFirestore.collection('answers').add).toHaveBeenCalledWith({ answer, player });
@@ -63,7 +63,7 @@ describe('CurrentAnswersService', () => {
     const answer: Answer = { id: '', answer: '' };
 
     // Act
-    service.setCorrectAnswer(answer, player);
+    // service.setCorrectAnswer(answer, player);
 
     // Assert
     expect(angularFirestore.collection('answers').doc).toHaveBeenCalledWith(expectedDocumentName);
@@ -76,7 +76,7 @@ describe('CurrentAnswersService', () => {
     const answer: Answer = { id: '', answer: '' };
 
     // Act
-    service.setCorrectAnswer(answer, player);
+    // service.setCorrectAnswer(answer, player);
 
     // Assert
     expect(angularFirestore.collection('answers').doc(documentName).set).toHaveBeenCalledWith({player, answer});

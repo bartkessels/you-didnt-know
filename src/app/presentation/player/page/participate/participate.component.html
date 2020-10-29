@@ -1,0 +1,20 @@
+<app-player-toolbar>
+
+  <app-answer-question *ngIf="currentQuestion"
+    [aboutPlayer]="aboutPlayer"
+    [currentPlayer]="currentPlayer"
+    [question]="currentQuestion"
+    (answerSelected)="answerButtonClicked($event)"></app-answer-question>
+
+  <app-display-user-results *ngIf="currentResults"
+    [aboutPlayer]="aboutPlayer"
+    [currentPlayer]="currentPlayer"
+    [results]="currentResults"></app-display-user-results>
+
+  <app-execute-assignment *ngIf="currentAssignment"
+    [assignment]="currentAssignment"></app-execute-assignment>
+
+  <app-waiting *ngIf="!currentQuestion && !currentResults && !currentAssignment"
+    [player]="currentUser"></app-waiting>
+
+</app-player-toolbar>
