@@ -24,4 +24,8 @@ export class SettingsUtil {
   public static getFirebaseApiKey(): string {
     return localStorage.getItem(this.firebaseApipKey) ?? '';
   }
+
+  public static clear(): void {
+    localStorage.clear();
+  }
 }

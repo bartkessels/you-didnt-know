@@ -35,4 +35,10 @@ export class PlayerService {
     const playerId = localStorage.getItem(this.localStorageKeyPlayer);
     return this.getPlayer(playerId);
   }
+
+  public async deletePlayer(player: Player): Promise<void> {
+    await this.firestore.collection<Player>(this.firestoreCollectionName)
+      .doc(player.id)
+      .delete();
+  }
 }

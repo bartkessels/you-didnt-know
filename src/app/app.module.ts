@@ -43,6 +43,7 @@ import { ExecuteAssignmentComponent } from './presentation/player/component/exec
 import { WaitingComponent } from './presentation/player/component/waiting/waiting.component';
 import { ParticipateComponent } from './presentation/player/page/participate/participate.component';
 import { DisplayUserResultsComponent } from './presentation/player/component/display-user-results/display-user-results.component';
+import { LandingComponent } from './presentation/shared/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { DisplayUserResultsComponent } from './presentation/player/component/dis
     ExecuteAssignmentComponent,
     WaitingComponent,
     ParticipateComponent,
-    DisplayUserResultsComponent
+    DisplayUserResultsComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,

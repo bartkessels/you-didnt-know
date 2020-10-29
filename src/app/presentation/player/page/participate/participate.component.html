@@ -1,4 +1,6 @@
-<app-player-toolbar>
+<app-player-toolbar
+  [displaySignOutButton]="true"
+  (signOut)="signOutButtonClicked()">
 
   <app-answer-question *ngIf="currentQuestion"
     [aboutPlayer]="aboutPlayer"

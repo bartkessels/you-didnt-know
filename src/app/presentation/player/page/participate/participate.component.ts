@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Answer } from 'src/app/models/answer.model';
 import { Assignment } from 'src/app/models/assignment.model';
 import { Player } from 'src/app/models/player.model';
@@ -10,6 +11,7 @@ import { CurrentAssignmentService } from 'src/app/service/current-assignment.ser
 import { CurrentQuestionService } from 'src/app/service/current-question.service';
 import { CurrentResultsService } from 'src/app/service/current-results.service';
 import { PlayerService } from 'src/app/service/player.service';
+import { SettingsUtil } from 'src/app/utils/settings.util';
 
 @Component({
   selector: 'app-participate',
@@ -30,7 +32,8 @@ export class ParticipateComponent {
     private currentAssignmentService: CurrentAssignmentService,
     private currentResultsService: CurrentResultsService,
     private currentAnswersService: CurrentAnswersService,
-    private aboutPlayerService: AboutPlayerService
+    private aboutPlayerService: AboutPlayerService,
+    private router: Router
   ) {
     this.playerService.getSelf().subscribe(p => {
       this.currentPlayer = p;
@@ -56,5 +59,12 @@ export class ParticipateComponent {
   public answerButtonClicked(answer: Answer): void {
     this.currentAnswersService.sendAnswer(this.currentQuestion, answer, this.currentPlayer);
     this.currentQuestion = null;
+  }
+
+  public signOutButtonClicked(): void {
+    SettingsUtil.clear();
+    this.playerService.deletePlayer(this.currentPlayer);
+
+    this.router.navigateByUrl('/');
   }
 }

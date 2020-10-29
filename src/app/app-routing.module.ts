@@ -10,8 +10,10 @@ import { UpdateQuizComponent } from './presentation/host/page/update-quiz/update
 import { JoinComponent } from './presentation/player/page/join/join.component';
 import { ParticipateComponent } from './presentation/player/page/participate/participate.component';
 import { RegisterPlayerComponent } from './presentation/player/page/register-player/register-player.component';
+import { LandingComponent } from './presentation/shared/landing/landing.component';
 
 const routes: Routes = [
+  // Host routes
   { path: 'host/settings', component: SettingsComponent },
   { path: 'host/dashboard', component: DashboardComponent },
   { path: 'host/create-quiz', component: CreateQuizComponent },
@@ -23,7 +25,10 @@ const routes: Routes = [
   // Player routes
   { path: 'player/join/:firebaseProjectId/:firebaseApiKey', component: JoinComponent },
   { path: 'player/register', component: RegisterPlayerComponent },
-  { path: 'player/participate', component: ParticipateComponent }
+  { path: 'player/participate', component: ParticipateComponent },
+
+  // General route
+  { path: '**', component: LandingComponent }
 ];
 
 @NgModule({
