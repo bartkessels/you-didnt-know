@@ -1,0 +1,30 @@
+<app-general-toolbar>
+  <mat-card>
+
+    <mat-card-header>
+      <div mat-card-avatar class="icon">
+        <mat-icon>delete</mat-icon>
+      </div>
+      <mat-card-title>Delete quiz</mat-card-title>
+      <mat-card-subtitle *ngIf="quiz">{{ quiz.title }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>Are you sure you want to delete this quiz?</p>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+
+      <!-- Cancel button -->
+      <a id="cancel" routerLink="/host/dashboard" mat-flat-button>No, don&lsquo;t delete this quiz</a>
+
+      <!-- Delete button -->
+      <button id="delete-quiz" (click)="deleteQuiz()" mat-flat-button color="warn">
+        Yes, delete this quiz
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+</app-general-toolbar>

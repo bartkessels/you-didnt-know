@@ -1,0 +1,14 @@
+<app-general-toolbar>
+
+  <app-quiz-list-item-card *ngFor="let quiz of quizzes | async"
+    [quiz]="quiz"></app-quiz-list-item-card>
+
+
+  <div *ngIf="!(quizzes | async)?.length" class="center">
+    <p>No quizzes yet, create one right now!</p>
+  </div>
+
+  <a routerLink="/host/create-quiz" mat-mini-fab class="fab" color="accent" aria-label="Add a new quiz">
+    <mat-icon>add</mat-icon>
+  </a>
+</app-general-toolbar>

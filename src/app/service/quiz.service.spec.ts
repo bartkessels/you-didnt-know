@@ -10,7 +10,8 @@ describe('QuizService', () => {
       valueChanges: jasmine.createSpy('valueChanges'),
       doc: jasmine.createSpy('doc').and.returnValue({
         set: jasmine.createSpy('set'),
-        valueChanges: jasmine.createSpy('valueChanges')
+        valueChanges: jasmine.createSpy('valueChanges'),
+        delete: jasmine.createSpy('delete')
       })
     })
   };
@@ -81,5 +82,27 @@ describe('QuizService', () => {
 
     // Assert
     expect(angularFirestore.collection('quizzes').doc).toHaveBeenCalledWith(expectedQuizId);
+  });
+
+  it('should delete the quiz based on the quiz id which is set as the doc id in firestore', () => {
+    // Arrange
+    const expectedQuizId = 'quiz1';
+
+    // Act
+    service.deleteQuiz(expectedQuizId);
+
+    // Assert
+    expect(angularFirestore.collection('quizzes').doc).toHaveBeenCalledWith(expectedQuizId);
+  });
+
+  it('should call delete on the doc with the quiz id', () => {
+    // Arrange
+    const expectedQuizId = 'quiz1';
+
+    // Act
+    service.deleteQuiz(expectedQuizId);
+
+    // Assert
+    expect(angularFirestore.collection('quizzes').doc(expectedQuizId).delete).toHaveBeenCalled();
   });
 });

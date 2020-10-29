@@ -1,0 +1,40 @@
+<mat-expansion-panel *ngIf="question">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ question.question }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <!-- Question -->
+  <mat-form-field>
+    <mat-label>Question</mat-label>
+    <input matInput [(ngModel)]="question.question">
+  </mat-form-field>
+
+  <!-- Answers -->
+  <mat-list>
+    <mat-list-item *ngFor="let answer of question.answers">
+      <button (click)="deleteAnswerButtonClicked(answer)" mat-icon-button aria-label="Delete this answer">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <mat-form-field>
+        <mat-label>Answer</mat-label>
+        <input matInput [(ngModel)]="answer.answer">
+      </mat-form-field>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-action-row>
+
+    <button (click)="addAnswerButtonClicked()" mat-icon-button aria-label="Add an answer">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <button (click)="deleteQuestionButtonClicked()" mat-icon-button aria-label="Delete question" color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+
+  </mat-action-row>
+
+</mat-expansion-panel>

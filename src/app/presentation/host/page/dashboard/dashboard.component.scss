@@ -1,0 +1,17 @@
+.fab{
+  right: 20px;
+  bottom: 20px;
+  position: fixed !important;
+}
+
+app-quiz-list-item-card {
+  display: inline-flex;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  height: 70%;
+  align-items: center;
+  color: gray;
+}

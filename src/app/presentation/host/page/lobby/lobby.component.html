@@ -1,0 +1,41 @@
+<app-general-toolbar>
+
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar class="icon">
+        <mat-icon>connect_without_contact</mat-icon>
+      </div>
+      <mat-card-title *ngIf="quiz">{{ quiz.title }}</mat-card-title>
+      <mat-card-subtitle>C'mon, join the quiz!</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="row">
+
+        <!-- Qr code -->
+        <div class="column">
+          <h3>Scan the Qr-code to join the game!</h3>
+          <qrcode [qrdata]="joinUri" [width]="250" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+
+        <!-- Players -->
+        <div class="column">
+          <h3>Players</h3>
+          <mat-chip-list aria-label="Players">
+            <mat-chip *ngFor="let player of players | async">{{ player.name }}</mat-chip>
+          </mat-chip-list>
+        </div>
+
+      </div>
+    </mat-card-content>
+
+
+  </mat-card>
+
+  <!-- Start button -->
+  <a *ngIf="quiz" routerLink="/host/play-quiz/{{ quiz.id }}" mat-mini-fab class="fab" color="accent" aria-label="Start the quiz">
+    <mat-icon>play_arrow</mat-icon>
+  </a>
+
+</app-general-toolbar>

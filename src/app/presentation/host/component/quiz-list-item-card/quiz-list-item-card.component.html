@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-title-group>
+    <mat-card-title>{{ quiz.title }}</mat-card-title>
+    <mat-card-subtitle>{{ quiz.questions.length }} question(s)<br>{{ quiz.assignments.length }} assignment(s)</mat-card-subtitle>
+  </mat-card-title-group>
+
+
+  <mat-card-content>
+    <a id="play-quiz" href="/host/lobby/{{ quiz.id }}" mat-flat-button area-label="Play quiz" color="primary">
+      <mat-icon color="white">play_arrow</mat-icon> Play this quiz
+    </a>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+
+    <a id="update-quiz" href="/host/update-quiz/{{ quiz.id }}" mat-icon-button aria-label="Edit this quiz" title="Edit this quiz">
+      <mat-icon>edit</mat-icon>
+    </a>
+
+    <a id="delete-quiz" href="/host/delete-quiz/{{ quiz.id }}" mat-icon-button aria-label="Delete this quiz" title="Delete this quiz" color="warn">
+      <mat-icon>delete</mat-icon>
+    </a>
+
+  </mat-card-actions>
+</mat-card>

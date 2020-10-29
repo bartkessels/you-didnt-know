@@ -40,4 +40,16 @@ export class CurrentAnswersService {
       .doc<GivenAnswer>(this.fireststoreCorrectAnswerDocName)
       .valueChanges();
   }
+
+  public async deleteCurrentAnswers(): Promise<void> {
+    this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
+      .snapshotChanges()
+      .subscribe(actions => {
+        actions.map(async u => {
+          await this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
+            .doc(u.payload.doc.id)
+            .delete();
+        });
+      });
+  }
 }

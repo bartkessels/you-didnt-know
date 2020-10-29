@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <span *ngIf="title">{{ title }}</span>
+  <span class="spacer"></span>
+
+  <button (click)="quitQuiz.emit()" mat-icon-button area-label="Stop quiz" title="Stop quiz">
+    <mat-icon>phonelink_off</mat-icon>
+  </button>
+
+</mat-toolbar>
+<ng-content></ng-content>

@@ -1,0 +1,76 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-subtitle *ngIf="quiz.id">Id: {{ quiz.id }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <!-- Title -->
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="quiz.title">
+    </mat-form-field>
+
+    <br><br>
+
+    <!-- Questions -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Questions</mat-card-title>
+        <mat-card-subtitle>{{ quiz.questions.length }} question(s)</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-accordion multi>
+        <app-manage-question *ngFor="let question of quiz.questions; let i = index"
+          [(question)]="quiz.questions[i]"
+          (deleteQuestion)="deleteQuestionButtonClicked(quiz.questions[i])"></app-manage-question>
+      </mat-accordion>
+
+      <mat-card-actions>
+
+        <!-- Add question button -->
+        <button mat-button color="primary" (click)="addQuestionButtonClicked()">
+          <mat-icon>add</mat-icon> Add new questions
+        </button>
+
+      </mat-card-actions>
+    </mat-card>
+
+    <br><br>
+
+    <!-- Assignments -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Assignments</mat-card-title>
+        <mat-card-subtitle>{{ quiz.assignments.length }} assignment(s)</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-accordion multi>
+        <app-manage-assignment *ngFor="let assignment of quiz.assignments; let i = index"
+          [(assignment)]="quiz.assignments[i]"
+          (deleteAssignment)="deleteAssignmentButtonClicked(quiz.assignments[i])"></app-manage-assignment>
+      </mat-accordion>
+
+      <mat-card-actions>
+
+        <!-- Add assignment button -->
+        <button mat-button color="primary" (click)="addAssignmentButtonClicked()">
+          <mat-icon>add</mat-icon> Add new assignment
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+  </mat-card-content>
+
+  <br>
+
+  <mat-card-actions align="end">
+
+    <!-- Save quiz -->
+    <button (click)="saveButtonClicked()" mat-flat-button color="primary">Save</button>
+
+  </mat-card-actions>
+</mat-card>

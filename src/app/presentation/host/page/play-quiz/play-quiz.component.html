@@ -1,0 +1,23 @@
+<app-host-playing-quiz-toolbar
+  title="Play along"
+  (quitQuiz)="onQuitQuizButtonClicked()">
+
+  <div *ngIf="currentQuestion || currentAssignment || currentResults">
+
+    <app-display-assignment *ngIf="currentAssignment"
+      [assignment]="currentAssignment"
+      (assignmentExecuted)="onAssignmentExecutedButtonClicked()"></app-display-assignment>
+
+    <app-display-question *ngIf="aboutPlayer && currentQuestion"
+      [player]="aboutPlayer"
+      [question]="currentQuestion"></app-display-question>
+
+    <app-display-results *ngIf="currentResults"
+      [results]="currentResults"
+      (resultsViewed)="onResultsViewedButtonClicked()"></app-display-results>
+
+  </div>
+
+  <app-quiz-outro *ngIf="!currentQuestion && !currentAssignment && !currentResults"></app-quiz-outro>
+
+</app-host-playing-quiz-toolbar>

@@ -1,0 +1,32 @@
+<app-general-toolbar>
+
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>Settings</mat-card-title>
+      <mat-card-subtitle>All your Firebase/Firestore settings we need</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <!-- Firebase ProjectId -->
+      <mat-form-field>
+        <mat-label>Firebase ProjectId</mat-label>
+        <input id="firebase-projectId" matInput [(ngModel)]="firebaseProjectId">
+      </mat-form-field>
+
+      <!-- Firebase API Key -->
+      <mat-form-field>
+        <mat-label>Firebase API Key</mat-label>
+        <input id="firebase-apiKey" matInput [(ngModel)]="firebaseApiKey">
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button id="save-settings" mat-flat-button color="primary" (click)="saveButtonClicked()">Save</button>
+    </mat-card-actions>
+
+  </mat-card>
+
+</app-general-toolbar>

@@ -27,4 +27,10 @@ export class QuizService {
       .doc<Quiz>(quizId)
       .valueChanges();
   }
+
+  public async deleteQuiz(quizId: string): Promise<void> {
+    await this.firestore.collection<Quiz>(this.firestoreCollectionName)
+      .doc(quizId)
+      .delete();
+  }
 }

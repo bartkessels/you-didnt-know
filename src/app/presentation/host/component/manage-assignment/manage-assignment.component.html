@@ -1,0 +1,36 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ assignment.order }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <!-- Order -->
+  <mat-form-field>
+    <mat-label>Order</mat-label>
+    <input matInput [(ngModel)]="assignment.order">
+  </mat-form-field>
+
+  <!-- Details -->
+  <mat-form-field>
+    <mat-label>Details</mat-label>
+    <input matInput [(ngModel)]="assignment.details">
+  </mat-form-field>
+
+  <br>
+
+  <!-- Description -->
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="assignment.description" rows="5"></textarea>
+  </mat-form-field>
+
+  <mat-action-row>
+
+    <button (click)="deleteAssignmentButtonClicked()" mat-icon-button aria-label="Delete assignment" color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+
+  </mat-action-row>
+
+</mat-expansion-panel>

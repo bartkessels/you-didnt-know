@@ -1,0 +1,23 @@
+.fab{
+  right: 20px;
+  bottom: 20px;
+  position: fixed !important;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+mat-card-header mat-icon {
+  transform: scale(2);
+}

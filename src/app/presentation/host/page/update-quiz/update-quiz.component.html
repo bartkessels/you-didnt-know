@@ -1,0 +1,6 @@
+<app-general-toolbar>
+  <app-manage-quiz *ngIf="quiz"
+    title="Update quiz"
+    [quiz]="quiz"
+    (saveQuiz)="saveQuiz($event)"></app-manage-quiz>
+</app-general-toolbar>
