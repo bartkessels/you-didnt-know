@@ -45,7 +45,8 @@ export class PlayGameService {
         const results: Results = {
           question: this.questions[0],
           wrongAnswers,
-          correctAnswers
+          correctAnswers,
+          correctAnswer
         };
 
         this.goToResults(results);

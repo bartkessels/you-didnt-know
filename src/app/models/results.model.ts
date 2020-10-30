@@ -5,4 +5,5 @@ export interface Results {
   question: Question;
   wrongAnswers: GivenAnswer[];
   correctAnswers: GivenAnswer[];
+  correctAnswer: GivenAnswer;
 }

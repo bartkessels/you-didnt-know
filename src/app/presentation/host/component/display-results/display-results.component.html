@@ -3,16 +3,12 @@
     <div mat-card-avatar class="icon">
       <mat-icon class="scale-icon">emoji_events</mat-icon>
     </div>
-    <mat-card-title *ngIf="results.wrongAnswers.length > results.correctAnswers.length">You really don't know {{ aboutPlayer.name }}...</mat-card-title>
-    <mat-card-title *ngIf="results.wrongAnswers.length === results.correctAnswers.length">{{ aboutPlayer.name }} well... at least some of your friends know you</mat-card-title>
-    <mat-card-title *ngIf="results.wrongAnswers.length < results.correctAnswers.length">Wow, you guys really know {{ aboutPlayer.name }}!</mat-card-title>
-
-    <mat-card-subtitle *ngIf="results.wrongAnswers.length > results.correctAnswers.length">Don't be sad {{ aboutPlayer.name }}</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="results.wrongAnswers.length === results.correctAnswers.length">You can still hang out with your friends who do know you</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="results.wrongAnswers.length < results.correctAnswers.length">You've got some awesome friends!</mat-card-subtitle>
+    <mat-card-title *ngIf="results.correctAnswer">{{ results.question.question }}</mat-card-title>
+    <mat-card-subtitle *ngIf="results.correctAnswer">{{ aboutPlayer.name }}: {{ results.correctAnswer.answer.answer }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
+
     <div class="row">
 
       <!-- Winners list -->
@@ -31,9 +27,9 @@
 
             <mat-list *ngIf="results.correctAnswers.length > 0">
 
-              <mat-list-item *ngFor="let winner of results.correctAnswers">
-                <div mat-line>{{ winner.player.name }}</div>
-              </mat-list-item>
+              <ul *ngIf="results.correctAnswers.length > 0">
+                <li *ngFor="let winner of results.correctAnswers"><b>{{ winner.player.name }}</b></li>
+              </ul>
 
             </mat-list>
 
@@ -53,15 +49,11 @@
 
           <mat-card-content>
 
-            <p *ngIf="results.wrongAnswers.length <= 0">Awesome, everybody know {{ aboutPlayer.name }}</p>
+            <p *ngIf="results.wrongAnswers.length <= 0">Awesome, everybody knows {{ aboutPlayer.name }}</p>
 
-            <mat-list *ngIf="results.wrongAnswers.length > 0">
-
-              <mat-list-item *ngFor="let loser of results.wrongAnswers">
-                <div>{{ loser.player.name }}</div>
-              </mat-list-item>
-
-            </mat-list>
+            <ul *ngIf="results.wrongAnswers.length > 0">
+              <li *ngFor="let loser of results.wrongAnswers"><b>{{ loser.player.name }}</b>: {{ loser.answer.answer }}</li>
+            </ul>
 
           </mat-card-content>
         </mat-card>
