@@ -16,6 +16,11 @@ export class JoinComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (SettingsUtil.deviceCanAccessFirebase()) {
+      this.router.navigateByUrl('/player/register');
+      return;
+    }
+
     this.route.params.subscribe(parameter => {
       const firebaseProjectId = parameter.firebaseProjectId;
       const firebaseApiKey = parameter.firebaseApiKey;
@@ -23,9 +28,7 @@ export class JoinComponent implements OnInit {
       SettingsUtil.saveFirebaseProjectId(firebaseProjectId);
       SettingsUtil.saveFirebaseApiKey(firebaseApiKey);
 
-      FirestoreUtil.initializeFirestore();
-
-      this.router.navigateByUrl('/player/register');
+      window.location.reload();
     });
   }
 
