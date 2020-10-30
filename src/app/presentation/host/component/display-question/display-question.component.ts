@@ -8,6 +8,6 @@ import { Question } from 'src/app/models/question.model';
   styleUrls: ['./display-question.component.scss']
 })
 export class DisplayQuestionComponent {
-  @Input() about: Player;
+  @Input() aboutPlayer: Player;
   @Input() question: Question;
 }

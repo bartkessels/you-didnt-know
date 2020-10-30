@@ -81,7 +81,9 @@ export class PlayGameService {
   }
 
   private async goToNextItem(): Promise<void> {
-    if (this.questions.length % 3 === 0 && this.assignments.length > 1) {
+    const shouldGoToAssignment = Math.floor(Math.floor(Math.random() * 50)) % 3 === 0;
+
+    if (shouldGoToAssignment && this.assignments.length > 1) {
       this.goToNextAssignment();
     } else if (this.questions.length > 1) {
       this.goToNextQuestion();

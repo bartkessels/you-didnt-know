@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: 'player/participate', component: ParticipateComponent },
 
   // General route
+  { path: 'host', component: SettingsComponent },
   { path: '**', component: LandingComponent }
 ];
 

@@ -9,7 +9,7 @@
       (assignmentExecuted)="onAssignmentExecutedButtonClicked()"></app-display-assignment>
 
     <app-display-question *ngIf="aboutPlayer && currentQuestion"
-      [player]="aboutPlayer"
+      [aboutPlayer]="aboutPlayer"
       [question]="currentQuestion"></app-display-question>
 
     <app-display-results *ngIf="currentResults"
