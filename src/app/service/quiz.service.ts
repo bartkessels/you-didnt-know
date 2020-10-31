@@ -11,8 +11,8 @@ export class QuizService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  public insertOrUpdateQuiz(quiz: Quiz): void {
-    this.firestore.collection(this.firestoreCollectionName)
+  public async insertOrUpdateQuiz(quiz: Quiz): Promise<void> {
+    await this.firestore.collection(this.firestoreCollectionName)
       .doc(quiz.id)
       .set(quiz);
   }
@@ -28,8 +28,8 @@ export class QuizService {
       .valueChanges();
   }
 
-  public deleteQuiz(quizId: string): void {
-    this.firestore.collection<Quiz>(this.firestoreCollectionName)
+  public async deleteQuiz(quizId: string): Promise<void> {
+    await this.firestore.collection<Quiz>(this.firestoreCollectionName)
       .doc(quizId)
       .delete();
   }

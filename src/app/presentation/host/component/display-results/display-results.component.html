@@ -4,10 +4,12 @@
       <mat-icon class="scale-icon">emoji_events</mat-icon>
     </div>
     <mat-card-title *ngIf="results.correctAnswer">{{ results.question.question }}</mat-card-title>
-    <mat-card-subtitle *ngIf="results.correctAnswer">{{ aboutPlayer.name }}: {{ results.correctAnswer.answer.answer }}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="aboutPlayer">{{ aboutPlayer.name }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
+
+    <h3 *ngIf="results">{{ results.correctAnswer.answer.answer }}</h3>
 
     <div class="row">
 
@@ -25,13 +27,9 @@
 
             <p *ngIf="results.correctAnswers.length <= 0">Really... no one knows {{ aboutPlayer.name }}</p>
 
-            <mat-list *ngIf="results.correctAnswers.length > 0">
-
-              <ul *ngIf="results.correctAnswers.length > 0">
-                <li *ngFor="let winner of results.correctAnswers"><b>{{ winner.player.name }}</b></li>
-              </ul>
-
-            </mat-list>
+            <ul *ngIf="results.correctAnswers.length > 0">
+              <li *ngFor="let winner of results.correctAnswers"><b>{{ winner.player.name }}</b></li>
+            </ul>
 
           </mat-card-content>
         </mat-card>

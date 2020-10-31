@@ -62,9 +62,13 @@ export class ParticipateComponent {
   }
 
   public signOutButtonClicked(): void {
-    SettingsUtil.clear();
     this.playerService.deletePlayer(this.currentPlayer);
 
+    this.clearSettingsAndNavigateToHome();
+  }
+
+  public clearSettingsAndNavigateToHome(): void {
+    SettingsUtil.clear();
     this.router.navigateByUrl('/');
   }
 }

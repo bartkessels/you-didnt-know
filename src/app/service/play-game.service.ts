@@ -36,11 +36,11 @@ export class PlayGameService {
     this.questions = quiz.questions;
     this.assignments = quiz.assignments;
 
-    this.playerService.getAllPlayers().subscribe(players => {
+    this.playerService.getAllPlayers().subscribe(async players => {
       this.players = players;
 
       if (players.length > 0) {
-        this.goToNextItem();
+        await this.goToNextItem();
       }
     });
 
@@ -65,59 +65,53 @@ export class PlayGameService {
     });
   }
 
-  public resultsViewed(): void {
+  public async resultsViewed(): Promise<void> {
     this.questions.splice(this.currentQuestionIndex, 1);
-    this.currentResultsService.deleteCurrentResults();
-    this.currentQuestionService.deleteCurrentQuestion();
+    await this.currentResultsService.deleteCurrentResults();
+    await this.currentQuestionService.deleteCurrentQuestion();
 
-    this.goToNextItem();
+    await this.goToNextItem();
   }
 
-  public assignmentExecuted(): void {
+  public async assignmentExecuted(): Promise<void> {
     this.assignments.splice(this.currentAssignmentIndex, 1);
-    this.currentAssignmentService.deleteCurrentAssignment();
-    this.goToNextItem();
+    await this.currentAssignmentService.deleteCurrentAssignment();
+
+    await this.goToNextItem();
   }
 
-  private setAboutPlayer(): void {
+  public async setAboutPlayer(): Promise<void> {
     const randomPlayerIndex = Math.floor(Math.random() * this.players.length);
     this.aboutPlayer = this.players[randomPlayerIndex];
 
-    this.aboutPlayerService.setAboutPlayer(this.aboutPlayer);
+    await this.aboutPlayerService.setAboutPlayer(this.aboutPlayer);
   }
 
-  private goToNextItem(): void {
+  private async goToNextItem(): Promise<void> {
     const shouldGoToAssignment = Math.floor(Math.floor(Math.random() * 50)) % 3 === 0;
 
     if ((shouldGoToAssignment || this.questions.length <= 0) && this.assignments.length > 0) {
-      this.goToNextAssignment();
+      await this.goToNextAssignment();
     } else if (this.questions.length > 0) {
-      this.goToNextQuestion();
+      await this.goToNextQuestion();
     } else {
-      this.endQuiz();
+      await this.endQuiz();
     }
   }
 
-  // should go to the next assignment if % 3 === 0 and there are questions and assignments
-  // should go to the next assigment if % 3 !== 0 but there are no more question and there are assignments
-  // should go to the next question if % 3 !== 0 and there are questions but there are no assignments
-  // should go to the next question if % 3 === 0 but there are no more assignments
-  // should end the quiz when % 3 === 0 but there are no questions or assignments
-  // should en the quiz when %3 !== 0 and there are no questions or assignments
-
-  public endQuiz(): void {
-    this.currentQuestionService.deleteCurrentQuestion();
-    this.currentAssignmentService.deleteCurrentAssignment();
-    this.currentResultsService.deleteCurrentResults();
-    this.currentAnswersService.deleteCurrentAnswers();
-    this.aboutPlayerService.deleteAboutPlayer();
+  public async endQuiz(): Promise<void> {
+    await this.currentQuestionService.deleteCurrentQuestion();
+    await this.currentAssignmentService.deleteCurrentAssignment();
+    await this.currentResultsService.deleteCurrentResults();
+    await this.currentAnswersService.deleteCurrentAnswers();
+    await this.aboutPlayerService.deleteAboutPlayer();
   }
 
-  private goToNextQuestion(): void {
+  private async goToNextQuestion(): Promise<void> {
     this.currentQuestionIndex = Math.floor(Math.floor(Math.random() * this.questions.length));
 
-    this.currentQuestionService.setCurrentQuestion(this.questions[this.currentQuestionIndex]);
-    this.setAboutPlayer();
+    await this.currentQuestionService.setCurrentQuestion(this.questions[this.currentQuestionIndex]);
+    await this.setAboutPlayer();
   }
 
   private async goToNextAssignment(): Promise<void> {

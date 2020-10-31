@@ -39,4 +39,7 @@ export class LobbyComponent implements OnInit {
     this.joinUri = `https://ydk.bartkessels.net/player/join/${firebaseProjectId}/${firebaseApiKey}`;
   }
 
+  public deletePlayerButtonClicked(player: Player): void {
+    this.playerService.deletePlayer(player);
+  }
 }
