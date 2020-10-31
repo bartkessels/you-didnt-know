@@ -12,10 +12,10 @@ export class AboutPlayerService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  public async setAboutPlayer(results: Player): Promise<void> {
+  public async setAboutPlayer(player: Player): Promise<void> {
     await this.firestore.collection<Player>(this.firestoreCollectionName)
       .doc<Player>(this.firestoreDocumentName)
-      .set(results);
+      .set(player);
   }
 
   public getAboutPlayer(): Observable<Player> {

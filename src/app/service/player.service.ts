@@ -42,8 +42,8 @@ export class PlayerService {
       .delete();
   }
 
-  public async deleteAllPlayers(): Promise<void> {
-    await this.firestore.collection<Player>(this.firestoreCollectionName)
+  public deleteAllPlayers(): void {
+    this.firestore.collection<Player>(this.firestoreCollectionName)
       .snapshotChanges()
       .subscribe(actions => {
         actions.map(async d => {

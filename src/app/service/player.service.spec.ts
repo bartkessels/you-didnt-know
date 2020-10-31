@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { Player } from '../models/player.model';
@@ -11,7 +11,8 @@ describe('PlayerService', () => {
       valueChanges: jasmine.createSpy('valueChanges'),
       doc: jasmine.createSpy('doc').and.returnValue({
         set: jasmine.createSpy('set'),
-        valueChanges: jasmine.createSpy('valueChanges')
+        valueChanges: jasmine.createSpy('valueChanges'),
+        delete: jasmine.createSpy('delete')
       })
     })
   };
@@ -91,5 +92,33 @@ describe('PlayerService', () => {
 
     // Assert
     expect(angularFirestore.collection('players').doc).toHaveBeenCalledWith(expectedPlayerId);
+  });
+
+  it('should delete the player based on the player id which is set as the doc id in firestore', () => {
+    // Arrange
+    const player: Player = {
+      id: '1',
+      name: ''
+    };
+
+    // Act
+    service.deletePlayer(player);
+
+    // Assert
+    expect(angularFirestore.collection('players').doc).toHaveBeenCalledWith(player.id);
+  });
+
+  it('should call delete on the doc with the player id', () => {
+    // Arrange
+    const player: Player = {
+      id: '1',
+      name: ''
+    };
+
+    // Act
+    service.deletePlayer(player);
+
+    // Assert
+    expect(angularFirestore.collection('players').doc(player.id).delete).toHaveBeenCalled();
   });
 });
