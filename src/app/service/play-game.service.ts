@@ -54,7 +54,7 @@ export class PlayGameService {
         const wrongAnswers = questionAnswers.filter(a => a.player.id !== this.aboutPlayer.id && a.answer.id !== correctAnswer.answer.id);
 
         const results: Results = {
-          question: this.questions[0],
+          question: this.questions[this.currentQuestionIndex],
           wrongAnswers,
           correctAnswers,
           correctAnswer
