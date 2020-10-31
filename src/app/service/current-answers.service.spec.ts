@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Answer } from '../models/answer.model';
 import { GivenAnswer } from '../models/given-answer.model';
 import { Player } from '../models/player.model';
+import { Question } from '../models/question.model';
 
 import { CurrentAnswersService } from './current-answers.service';
 
@@ -36,16 +37,32 @@ describe('CurrentAnswersService', () => {
     angularFirestore = TestBed.inject(AngularFirestore);
   });
 
-  it('should create a new GivenAnswer object with the answer and player objects when sendAnswer is called', () => {
+  it('should use the player id as the document name for the given answer', () => {
     // Arrange
+    const expectedDocumentId = 'my-doc';
+    const question: Question = { id: '', question: '', answers: [] };
     const answer: Answer = { id: '', answer: '' };
-    const player: Player = { id: '', name: '' };
+    const player: Player = { id: expectedDocumentId, name: '' };
 
     // Act
-    // service.sendAnswer(answer, player);
+    service.sendAnswer(question, answer, player);
 
     // Assert
-    expect(angularFirestore.collection('answers').add).toHaveBeenCalledWith({ answer, player });
+    expect(angularFirestore.collection('answers').doc).toHaveBeenCalledWith(expectedDocumentId);
+  });
+
+  it('should set the given answer on the document', () => {
+    // Arrange
+    const documentId = 'my-doc';
+    const question: Question = { id: '', question: '', answers: [] };
+    const answer: Answer = { id: '', answer: '' };
+    const player: Player = { id: documentId, name: '' };
+
+    // Act
+    service.sendAnswer(question, answer, player);
+
+    // Assert
+    expect(angularFirestore.collection('answers').doc(documentId).set).toHaveBeenCalledWith({ question, answer, player });
   });
 
   it('Should call valueChanges on the collection directly when getAllAnswers is called', () => {
@@ -59,11 +76,12 @@ describe('CurrentAnswersService', () => {
   it('should store the givenAnswer in the "correct-answer" document when setCorrectAnswer is called', () => {
     // Arrange
     const expectedDocumentName = 'correct-answer';
+    const question: Question = { id: '', question: '', answers: [] };
     const player: Player = { id: '', name: '' };
     const answer: Answer = { id: '', answer: '' };
 
     // Act
-    // service.setCorrectAnswer(answer, player);
+    service.setCorrectAnswer( question, answer, player);
 
     // Assert
     expect(angularFirestore.collection('answers').doc).toHaveBeenCalledWith(expectedDocumentName);
@@ -72,18 +90,18 @@ describe('CurrentAnswersService', () => {
   it('should create a new GivenAnswer object with the answer and player objects when setCorrectAnswer is called', () => {
     // Arrange
     const documentName = 'correct-answer';
+    const question: Question = { id: '', question: '', answers: [] };
     const player: Player = { id: '', name: '' };
     const answer: Answer = { id: '', answer: '' };
 
     // Act
-    // service.setCorrectAnswer(answer, player);
+    service.setCorrectAnswer(question, answer, player);
 
     // Assert
-    expect(angularFirestore.collection('answers').doc(documentName).set).toHaveBeenCalledWith({player, answer});
+    expect(angularFirestore.collection('answers').doc(documentName).set).toHaveBeenCalledWith({ question, player, answer});
   });
-  // should retrieve the givenAnswer from the "correct-answer" document when getCorrectAnswer is called
 
-  it('should create a new GivenAnswer object with the answer and player objects when setCorrectAnswer is called', () => {
+  it('should get the correct answer based on the correct-answer document', () => {
     // Arrange
     const expectedDocumentName = 'correct-answer';
 
@@ -92,5 +110,16 @@ describe('CurrentAnswersService', () => {
 
     // Assert
     expect(angularFirestore.collection('answers').doc).toHaveBeenCalledWith(expectedDocumentName);
+  });
+
+  it('should retrieve the givenAnswer from the "correct-answer" document when getCorrectAnswer is called', () => {
+    // Arrange
+    const documentName = 'correct-answer';
+
+    // Act
+    service.getCorrectAnswer();
+
+    // Assert
+    expect(angularFirestore.collection('answers').doc(documentName).valueChanges).toHaveBeenCalled();
   });
 });

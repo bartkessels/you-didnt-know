@@ -16,10 +16,10 @@ export class CurrentAnswersService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  public async sendAnswer(question: Question, answer: Answer, player: Player): Promise<void> {
+  public sendAnswer(question: Question, answer: Answer, player: Player): void {
     const givenAnswer: GivenAnswer = { question, answer, player };
 
-    await this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
+    this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
       .doc(player.id)
       .set(givenAnswer);
   }
@@ -29,7 +29,7 @@ export class CurrentAnswersService {
       .valueChanges();
   }
 
-  public async setCorrectAnswer(question: Question, answer: Answer, player: Player): Promise<void> {
+  public setCorrectAnswer(question: Question, answer: Answer, player: Player): void {
     const givenAnswer: GivenAnswer = { question, answer, player };
 
     this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)

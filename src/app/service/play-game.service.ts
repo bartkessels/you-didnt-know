@@ -36,7 +36,15 @@ export class PlayGameService {
     this.questions = quiz.questions;
     this.assignments = quiz.assignments;
 
-    this.currentAnswersService.getAllAnswers().subscribe(answers => {
+    this.playerService.getAllPlayers().subscribe(players => {
+      this.players = players;
+
+      if (players.length > 0) {
+        this.goToNextItem();
+      }
+    });
+
+    this.currentAnswersService.getAllAnswers().subscribe(async answers => {
       const questionAnswers = answers.filter(q => q.question.id === this.questions[this.currentQuestionIndex].id);
 
       if (this.players != null && questionAnswers.length >= this.players.length) {
@@ -52,41 +60,33 @@ export class PlayGameService {
           correctAnswer
         };
 
-        this.goToResults(results);
-      }
-    });
-
-    this.playerService.getAllPlayers().subscribe(players => {
-      this.players = players;
-
-      if (players.length > 0) {
-        this.goToNextItem();
+        await this.goToResults(results);
       }
     });
   }
 
-  public async resultsViewed(): Promise<void> {
+  public resultsViewed(): void {
     this.questions.splice(this.currentQuestionIndex, 1);
-    await this.currentResultsService.deleteCurrentResults();
-    await this.currentQuestionService.deleteCurrentQuestion();
+    this.currentResultsService.deleteCurrentResults();
+    this.currentQuestionService.deleteCurrentQuestion();
 
-    await this.goToNextItem();
+    this.goToNextItem();
   }
 
-  public async assignmentExecuted(): Promise<void> {
+  public assignmentExecuted(): void {
     this.assignments.splice(this.currentAssignmentIndex, 1);
-    await this.currentAssignmentService.deleteCurrentAssignment();
-    await this.goToNextItem();
+    this.currentAssignmentService.deleteCurrentAssignment();
+    this.goToNextItem();
   }
 
-  private async setAboutPlayer(): Promise<void> {
+  private setAboutPlayer(): void {
     const randomPlayerIndex = Math.floor(Math.random() * this.players.length);
     this.aboutPlayer = this.players[randomPlayerIndex];
 
-    await this.aboutPlayerService.setAboutPlayer(this.aboutPlayer);
+    this.aboutPlayerService.setAboutPlayer(this.aboutPlayer);
   }
 
-  private async goToNextItem(): Promise<void> {
+  private goToNextItem(): void {
     const shouldGoToAssignment = Math.floor(Math.floor(Math.random() * 50)) % 3 === 0;
 
     if ((shouldGoToAssignment || this.questions.length <= 0) && this.assignments.length > 0) {
@@ -98,7 +98,14 @@ export class PlayGameService {
     }
   }
 
-  public async endQuiz(): Promise<void> {
+  // should go to the next assignment if % 3 === 0 and there are questions and assignments
+  // should go to the next assigment if % 3 !== 0 but there are no more question and there are assignments
+  // should go to the next question if % 3 !== 0 and there are questions but there are no assignments
+  // should go to the next question if % 3 === 0 but there are no more assignments
+  // should end the quiz when % 3 === 0 but there are no questions or assignments
+  // should en the quiz when %3 !== 0 and there are no questions or assignments
+
+  public endQuiz(): void {
     this.currentQuestionService.deleteCurrentQuestion();
     this.currentAssignmentService.deleteCurrentAssignment();
     this.currentResultsService.deleteCurrentResults();
@@ -106,11 +113,11 @@ export class PlayGameService {
     this.aboutPlayerService.deleteAboutPlayer();
   }
 
-  private async goToNextQuestion(): Promise<void> {
+  private goToNextQuestion(): void {
     this.currentQuestionIndex = Math.floor(Math.floor(Math.random() * this.questions.length));
 
-    await this.currentQuestionService.setCurrentQuestion(this.questions[this.currentQuestionIndex]);
-    await this.setAboutPlayer();
+    this.currentQuestionService.setCurrentQuestion(this.questions[this.currentQuestionIndex]);
+    this.setAboutPlayer();
   }
 
   private async goToNextAssignment(): Promise<void> {

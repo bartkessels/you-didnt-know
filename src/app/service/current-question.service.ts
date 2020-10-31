@@ -12,8 +12,8 @@ export class CurrentQuestionService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  public async setCurrentQuestion(question: Question): Promise<void> {
-    await this.firestore.collection<Question>(this.firestoreCollectionName)
+  public setCurrentQuestion(question: Question): void {
+    this.firestore.collection<Question>(this.firestoreCollectionName)
       .doc<Question>(this.firestoreDocName)
       .set(question);
   }
@@ -24,8 +24,8 @@ export class CurrentQuestionService {
       .valueChanges();
   }
 
-  public async deleteCurrentQuestion(): Promise<void> {
-    await this.firestore.collection<Question>(this.firestoreCollectionName)
+  public deleteCurrentQuestion(): void {
+    this.firestore.collection<Question>(this.firestoreCollectionName)
       .doc<Question>(this.firestoreDocName)
       .delete();
   }

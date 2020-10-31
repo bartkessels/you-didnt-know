@@ -12,8 +12,8 @@ export class CurrentAssignmentService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  public async setCurrentAssignment(assignment: Assignment): Promise<void> {
-    await this.firestore.collection<Assignment>(this.firestoreCollectionName)
+  public setCurrentAssignment(assignment: Assignment): void {
+    this.firestore.collection<Assignment>(this.firestoreCollectionName)
       .doc<Assignment>(this.firestoreDocName)
       .set(assignment);
   }
@@ -24,8 +24,8 @@ export class CurrentAssignmentService {
       .valueChanges();
   }
 
-  public async deleteCurrentAssignment(): Promise<void> {
-    await this.firestore.collection<Assignment>(this.firestoreCollectionName)
+  public deleteCurrentAssignment(): void {
+    this.firestore.collection<Assignment>(this.firestoreCollectionName)
       .doc<Assignment>(this.firestoreDocName)
       .delete();
   }

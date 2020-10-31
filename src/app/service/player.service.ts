@@ -12,10 +12,10 @@ export class PlayerService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  public async insertOrUpdatePlayer(player: Player): Promise<void> {
+  public insertOrUpdatePlayer(player: Player): void {
     localStorage.setItem(this.localStorageKeyPlayer, player.id);
 
-    await this.firestore.collection<Player>(this.firestoreCollectionName)
+    this.firestore.collection<Player>(this.firestoreCollectionName)
       .doc<Player>(player.id)
       .set(player);
   }
@@ -36,8 +36,8 @@ export class PlayerService {
     return this.getPlayer(playerId);
   }
 
-  public async deletePlayer(player: Player): Promise<void> {
-    await this.firestore.collection<Player>(this.firestoreCollectionName)
+  public deletePlayer(player: Player): void {
+    this.firestore.collection<Player>(this.firestoreCollectionName)
       .doc(player.id)
       .delete();
   }
