@@ -24,6 +24,9 @@
     </mat-card-content>
 
     <mat-card-actions align="end">
+      <button id="delete-all-players" mat-flat-button color="warn" (click)="deleteAllPlayers()">Delete all players</button>
+      <button id="clear-current-quiz" mat-flat-button color="warn" (click)="clearCurrentPlayingSession()">Clear current playing session</button>
+
       <button id="save-settings" mat-flat-button color="primary" (click)="saveButtonClicked()">Save</button>
     </mat-card-actions>
 

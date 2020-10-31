@@ -41,4 +41,16 @@ export class PlayerService {
       .doc(player.id)
       .delete();
   }
+
+  public async deleteAllPlayers(): Promise<void> {
+    await this.firestore.collection<Player>(this.firestoreCollectionName)
+      .snapshotChanges()
+      .subscribe(actions => {
+        actions.map(async d => {
+          await this.firestore.collection<Player>(this.firestoreCollectionName)
+            .doc(d.payload.doc.id)
+            .delete();
+        });
+      });
+  }
 }

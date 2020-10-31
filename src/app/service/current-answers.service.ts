@@ -43,8 +43,8 @@ export class CurrentAnswersService {
       .valueChanges();
   }
 
-  public deleteCurrentAnswers(): void {
-    this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
+  public async deleteCurrentAnswers(): Promise<void> {
+    await this.firestore.collection<GivenAnswer>(this.firestoreCollectionName)
       .snapshotChanges()
       .subscribe(actions => {
         actions.map(async u => {
